@@ -1,0 +1,23 @@
+{
+  "darkColorsAmount": "Количество тёмных цветов",
+  "darkness": "Темнота",
+  "darkHueAngle": "Угол тона тёмных цветов",
+  "darkSaturation": "Насыщенность тёмных цветов",
+  "lightColorsAmount": "Количество светлых цветов",
+  "lightness": "Светлота",
+  "lightHueAngle": "Угол тона светлых цветов",
+  "lightSaturation": "Насыщенность светлых цветов",
+  "color": "Цвет",
+  "background": "Фон",
+  "triggers": "Действия",
+  "copySvg": "Копировать SVG",
+  "copyColors": "Копировать цвета",
+  "randomizeAll": "Случайный выбор всех",
+  "randomizeColor": "Случайный цвет",
+  "madeBy": "создал",
+  "gallery": "Галерея",
+  "submit": "+отправить",
+  "by": "автор",
+  "pageTitle": "Scale — генератор цветовых шкал",
+  "pageDescription": "Генератор цветовых шкал от Hayk An"
+}

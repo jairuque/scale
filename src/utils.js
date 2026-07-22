@@ -1,7 +1,7 @@
 import Color from "color"
 
 export const numberToHex = (number) => '#' + number
-export const hexToNumber = (number) => number.substr(1, number.length)
+export const hexToNumber = (number) => number.substring(1)
 
 export const initialColor = '1D9A6C'
 
@@ -44,7 +44,7 @@ export const isValidHex = (color) => {
 export const hashToObject = (hash) => {
   if (hash) {
     const stateKeysArray = Object.keys(defaultState)
-    const hashValuesArray = hash.substr(1, hash.length).split(['/'])
+    const hashValuesArray = hash.substring(1).split('/')
 
     const getHashObject = () => {
       var hashObject = {}

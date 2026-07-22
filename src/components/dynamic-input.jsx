@@ -1,8 +1,7 @@
-import React from 'react'
 import Color from 'color'
 import styled from 'styled-components'
 import { isValidHex } from '../utils.js'
-import Slider from './slider.js'
+import Slider from './slider'
 
 const InputWrapper = styled.div`
   position: relative;
@@ -26,7 +25,7 @@ const DynamicInputField = styled.input`
   background-color: transparent;
   appearance: textfield;
   margin: 0;
-  ${props => props.isDisabled && `
+  ${props => props.$isDisabled && `
     user-select: none;
     opacity: 0.4;
   `};
@@ -80,7 +79,7 @@ const DynamicInput = ({ value, onChange, color, prefix, sufix, withSlider, withR
 
       <DynamicInputRoot>
         <InputWrapper color={color}>
-          <DynamicInputField color={color} value={prefix} type='text' readOnly isDisabled tabIndex={-1} />
+          <DynamicInputField color={color} value={prefix} type='text' readOnly $isDisabled tabIndex={-1} />
           <DynamicInputValue>
             {prefix}
           </DynamicInputValue>
@@ -94,7 +93,7 @@ const DynamicInput = ({ value, onChange, color, prefix, sufix, withSlider, withR
         </InputWrapper>
 
         <InputWrapper color={color}>
-          <DynamicInputField color={color} value={sufix} type='text' readOnly isDisabled tabIndex={-1} />
+          <DynamicInputField color={color} value={sufix} type='text' readOnly $isDisabled tabIndex={-1} />
           <DynamicInputValue>
             {sufix}
           </DynamicInputValue>

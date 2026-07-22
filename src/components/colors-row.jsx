@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from "styled-components"
 import ColorBlock from './color-block'
 import { isValidHex, numberToHex, errorColor } from '../utils'
@@ -22,7 +21,7 @@ const ColorsRow = ({
     ))}
 
     <ColorBlock
-      wide
+      $wide
       style={{ background: isValidHex(numberToHex(mainColor)) ? numberToHex(mainColor) : errorColor }}
       hasValidColor={isValidHex(numberToHex(mainColor))}
       color={numberToHex(mainColor)}

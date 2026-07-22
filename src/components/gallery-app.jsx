@@ -1,6 +1,6 @@
-import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import Color from 'color'
 import { galleryData } from './gallery-data'
 import { hashToObject, numberToHex, errorColor, isValidHex } from '../utils'
@@ -71,10 +71,13 @@ const getColorsList = (colorsAmount, colorsShiftAmount, mixColor, rotate, satura
   return colorsList
 }
 
-const GalleryApp = () => (
+const GalleryApp = () => {
+  const { t } = useTranslation()
+
+  return (
   <GalleryWrapper>
     <GalleryHeader>
-      <Link to="/">scale/</Link>gallery
+      <Link to="/">scale/</Link>{t('gallery')}
 
       <SubmitLink
         href="https://hayk15.typeform.com/to/mVHrni"
@@ -84,14 +87,14 @@ const GalleryApp = () => (
         data-submit-close-delay="5"
         className="typeform-share"
       >
-        +submit
+        {t('submit')}
       </SubmitLink>
     </GalleryHeader>
     {Object.entries(galleryData).map(([key, value]) => {
       const getColorsObject = () => hashToObject(value.scaleValue)
 
       return (
-        <GalleryItem color={numberToHex(getColorsObject())}>
+        <GalleryItem key={key} color={numberToHex(getColorsObject().mainColor)}>
           <a href={`https://hihayk.github.io/scale/${value.scaleValue}`}>
             <ColorBlocksRow disabled>
               {getColorsList(getColorsObject().darkColorsAmount, getColorsObject().darkestAmount, 'black', getColorsObject().darkColorsMixRotate, getColorsObject().darkSaturation, value).reverse().map((color, index) => (
@@ -99,7 +102,7 @@ const GalleryApp = () => (
               ))}
 
               <ColorBlock
-                wide
+                $wide
                 style={{ background: isValidHex(numberToHex(getColorsObject().mainColor)) ? numberToHex(getColorsObject().mainColor) : errorColor }}
                 hasValidColor={isValidHex(numberToHex(getColorsObject().mainColor))}
                 color={numberToHex(getColorsObject().mainColor)}
@@ -111,13 +114,14 @@ const GalleryApp = () => (
             </ColorBlocksRow>
 
             <ItemAuthor href={value.authorLink} target='_blank' color={numberToHex(getColorsObject().mainColor)}>
-              by {value.authorName}
+              {t('by')} {value.authorName}
             </ItemAuthor>
           </a>
         </GalleryItem>
       )
     })}
   </GalleryWrapper>
-)
+  )
+}
 
 export default GalleryApp

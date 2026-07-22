@@ -1,0 +1,23 @@
+{
+  "darkColorsAmount": "Dark colors amount",
+  "darkness": "Darkness",
+  "darkHueAngle": "Dark colors hue angle",
+  "darkSaturation": "Dark colors saturation",
+  "lightColorsAmount": "Light colors amount",
+  "lightness": "Lightness",
+  "lightHueAngle": "Light colors hue angle",
+  "lightSaturation": "Light colors saturation",
+  "color": "Color",
+  "background": "Background",
+  "triggers": "Triggers",
+  "copySvg": "Copy SVG",
+  "copyColors": "Copy colors",
+  "randomizeAll": "Randomize all",
+  "randomizeColor": "Randomize color",
+  "madeBy": "made by",
+  "gallery": "Gallery",
+  "submit": "+submit",
+  "by": "by",
+  "pageTitle": "Scale — color scale generator",
+  "pageDescription": "Color scale generator by Hayk An"
+}

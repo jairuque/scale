@@ -1,5 +1,5 @@
-import React from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Color from 'color'
 
 const DotsWrapper = styled.div`
@@ -44,10 +44,11 @@ const BackgroundSelector = ({
   lightColors,
   lightColorsAmount,
 }) => {
+  const { t } = useTranslation()
 
   return (
-    <React.Fragment>
-      <Title>Background</Title>
+    <>
+      <Title>{t('background')}</Title>
       <DotsWrapper>
         <DotsColumn className="DotsColumn">
           <Dot className="Dot" color='black' onClick={() => setBgColor('black')} style={{ '--borderColor': getBorderColor('black') }}/>
@@ -72,7 +73,7 @@ const BackgroundSelector = ({
           })}
         </DotsColumn>
       </DotsWrapper>
-    </React.Fragment>
+    </>
   )
 }
 

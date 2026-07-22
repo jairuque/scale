@@ -1,7 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
-import Slider from './slider'
+import { useTranslation } from 'react-i18next'
 import DynamicInput from './dynamic-input'
+import Slider from './slider'
 import { numberToHex } from '../utils'
 
 const InputsRow = styled.div`
@@ -15,7 +15,7 @@ const InputsRow = styled.div`
 const InputsRowItem = styled.div`
   margin-right: 40px;
   flex-shrink: 0;
-  width: ${props => props.wide ? 192 : 96}px;
+  width: ${props => props.$wide ? 192 : 96}px;
 `
 
 const SliderLabel = styled.div`
@@ -42,10 +42,13 @@ const MainColorSelector = ({
   onRChange,
   onGChange,
   onBChange,
-}) => (
+}) => {
+  const { t } = useTranslation()
+
+  return (
   <InputsRow>
-    <InputsRowItem wide>
-      <DynamicInput color={numberToHex(mainColor)} value={mainColor} onChange={onInputChange} onBlur={onInputBlur} prefix='#' label='Color' />
+    <InputsRowItem $wide>
+      <DynamicInput color={numberToHex(mainColor)} value={mainColor} onChange={onInputChange} onBlur={onInputBlur} prefix='#' label={t('color')} />
 
       <SliderWrapper>
         <SliderLabel>
@@ -67,6 +70,7 @@ const MainColorSelector = ({
       </SliderWrapper>
     </InputsRowItem>
   </InputsRow>
-)
+  )
+}
 
 export default MainColorSelector

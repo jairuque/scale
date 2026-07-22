@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import './App.css'
+import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import Color from 'color'
 import styled from 'styled-components'
-import DynamicInput from './components/dynamic-input.js'
-import Footer from './components/footer.js'
+import DynamicInput from './components/dynamic-input'
+import Footer from './components/footer'
 import { isValidHex, numberToHex, hexToNumber, errorColor, defaultState, getColorsList } from './utils.js'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router'
 import GalleryApp from './components/gallery-app'
 import ColorsRow from './components/colors-row'
 import MainColorSelector from './components/main-color-selector'
@@ -56,7 +56,7 @@ const InputsRow = styled.div`
 const InputsRowItem = styled.div`
   margin-right: 40px;
   flex-shrink: 0;
-  width: ${props => props.wide ? 192 : 96}px;
+  width: ${props => props.$wide ? 192 : 96}px;
 `
 
 const InputsRowItemSeparataor = styled.div`
@@ -71,7 +71,7 @@ const BackgroundSelectorSection = styled.div`
   border-left: 1px solid var(--border);
   padding: 0 48px;
   height: 160px;
-  
+
   @media (max-width: 720px) {
     padding: 16px 0;
     margin-top: 16px;
@@ -83,7 +83,7 @@ const BackgroundSelectorSection = styled.div`
 const TriggersSection = styled.div`
   border-left: 1px solid var(--border);
   padding: 0 48px;
-  
+
   @media (max-width: 720px) {
     padding: 16px 0;
     margin-top: 16px;
@@ -92,13 +92,15 @@ const TriggersSection = styled.div`
   }
 `
 
-const ScaleApp = () => {  
+const ScaleApp = () => {
+  const { t, i18n } = useTranslation()
+
   const getHash = () => {
     const hash = decodeURI(window.location.hash)
 
     if (hash) {
       const stateKeysArray = Object.keys(defaultState)
-      const hashValuesArray = hash.substr(1, hash.length).split(['/'])
+      const hashValuesArray = hash.substring(1).split('/')
 
       const getHashObject = () => {
         var hashObject = {}
@@ -146,14 +148,14 @@ const ScaleApp = () => {
     bgColor,
   }
 
-  if(getHash()) {
+  if (getHash()) {
     window.location.hash = encodeURI(Object.values(getHash()).join('/'))
   }
 
   const updateHash = () => {
     window.location.hash = encodeURI(Object.values(currentState).join('/'))
   }
-  
+
   const updateThemeColor = () => {
     document.getElementById('themeMetaTag').setAttribute('content', numberToHex(mainColor))
   }
@@ -171,7 +173,7 @@ const ScaleApp = () => {
     const typedColor = e.target.value
 
     if (typedColor[0] === '#') {
-      typedColorFiltered = typedColor.substr(1, typedColor.length)
+      typedColorFiltered = typedColor.substring(1)
     } else {
       typedColorFiltered = typedColor
     }
@@ -182,52 +184,51 @@ const ScaleApp = () => {
   }
 
   const rgbToMainColor = () => {
-    setTimeout(() => {
-      setMainColor(hexToNumber(Color(`rgb(${r}, ${g}, ${b})`).hex()))
-    }, 0)
+    setMainColor(hexToNumber(Color(`rgb(${r}, ${g}, ${b})`).hex()))
   }
+
+  useEffect(() => {
+    rgbToMainColor()
+  }, [r, g, b])
 
   const handleRChange = (value) => {
     setR(value)
-    rgbToMainColor()
   }
   const handleGChange = (value) => {
     setG(value)
-    rgbToMainColor()
   }
   const handleBChange = (value) => {
     setB(value)
-    rgbToMainColor()
   }
-  
+
   const bgRefToNumber = (ref) => {
-    if(ref.includes('l-')) {
-      return ref.substring(2, ref.length)
+    if (ref.includes('l-')) {
+      return ref.substring(2)
     }
-    if(ref.includes('d-')) {
-      return ref.substring(2, ref.length)
+    if (ref.includes('d-')) {
+      return ref.substring(2)
     }
   }
 
   const darkColors = getColorsList(darkColorsAmount, darkestAmount, 'black', darkColorsMixRotate, darkSaturation, mainColor).reverse().map((color) => (color))
   const lightColors = getColorsList(lightColorsAmount, lightestAmount, 'white', lightColorsMixRotate, lightSaturation, mainColor).map((color) => (color))
-  
+
   const setBgColorVar = () => {
     let color = ''
 
-    if(bgColor === undefined) {
+    if (bgColor === undefined) {
       color = defaultState.bgColor
       setBgColor(defaultState.bgColor)
     } else {
-      if(bgColor === 'white' || bgColor === 'black') {
+      if (bgColor === 'white' || bgColor === 'black') {
         color = bgColor
       }
-      
-      if(bgColor.includes('l-')) {
+
+      if (bgColor.includes('l-')) {
         color = lightColors[lightColorsAmount - bgRefToNumber(bgColor)]
       }
-      
-      if(bgColor.includes('d-')) {
+
+      if (bgColor.includes('d-')) {
         color = darkColors[bgRefToNumber(bgColor)]
       }
     }
@@ -239,14 +240,19 @@ const ScaleApp = () => {
   useEffect(() => {
     updateHash()
     updateThemeColor()
-  });
+  }, [currentState])
+
+  useEffect(() => {
+    document.title = t('pageTitle')
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t('pageDescription'))
+  }, [t, i18n.language])
 
   const setBodyColorVar = () => {
     const givenColor = isValidHex(numberToHex(mainColor)) ? numberToHex(mainColor) : errorColor
-    
+
     const getMixColor = () => {
-      if(bgColor) {
-        if(bgColor.includes('l-') || bgColor.includes('white')) {
+      if (bgColor) {
+        if (bgColor.includes('l-') || bgColor.includes('white')) {
           return 'black'
         } else {
           return 'white'
@@ -269,7 +275,7 @@ const ScaleApp = () => {
   }
 
   setBodyColorVar()
-  
+
   return (
     <MainWrapper>
       <TopSection>
@@ -328,9 +334,9 @@ const ScaleApp = () => {
                 value={darkColorsAmount}
                 onChange={(e) => setDarkColorsAmount(e.target.value)}
                 onBlur={(e) => !e.target.value && setDarkColorsAmount(0)}
-                type='number' 
+                type='number'
                 min={0}
-                label='Dark colors amount'
+                label={t('darkColorsAmount')}
               />
             </InputsRowItem>
             <InputsRowItem>
@@ -339,12 +345,12 @@ const ScaleApp = () => {
                 value={darkestAmount}
                 onChange={(e) => setDarkestAmount(e.target.value)}
                 onBlur={(e) => !e.target.value && setDarkestAmount(0)}
-                type='number' 
-                sufix='%' 
+                type='number'
+                sufix='%'
                 min={0}
                 max={99}
                 withSlider
-                label='Darkness'
+                label={t('darkness')}
               />
             </InputsRowItem>
             <InputsRowItem>
@@ -358,7 +364,7 @@ const ScaleApp = () => {
                 type='number'
                 sufix='º'
                 withSlider
-                label='Dark colors hue angle'
+                label={t('darkHueAngle')}
               />
             </InputsRowItem>
             <InputsRowItem>
@@ -372,7 +378,7 @@ const ScaleApp = () => {
                 type='number'
                 sufix='%'
                 withSlider
-                label='Dark colors saturation'
+                label={t('darkSaturation')}
               />
             </InputsRowItem>
 
@@ -384,9 +390,9 @@ const ScaleApp = () => {
                 value={lightColorsAmount}
                 onChange={(e) => setLightColorsAmount(e.target.value)}
                 onBlur={(e) => !e.target.value && setLightColorsAmount(0)}
-                min={0} 
-                type='number' 
-                label='Light colors amount'
+                min={0}
+                type='number'
+                label={t('lightColorsAmount')}
               />
             </InputsRowItem>
             <InputsRowItem>
@@ -395,12 +401,12 @@ const ScaleApp = () => {
                 value={lightestAmount}
                 onChange={(e) => setLightestAmount(e.target.value)}
                 onBlur={(e) => !e.target.value && setLightestAmount(0)}
-                min={0} 
-                max={99} 
+                min={0}
+                max={99}
                 type='number'
                 sufix='%'
                 withSlider
-                label='Lightness'
+                label={t('lightness')}
               />
             </InputsRowItem>
             <InputsRowItem>
@@ -409,12 +415,12 @@ const ScaleApp = () => {
                 value={lightColorsMixRotate}
                 onChange={(e) => setLightColorsMixRotate(e.target.value)}
                 onBlur={(e) => !e.target.value && setLightColorsMixRotate(0)}
-                min={-360} 
-                max={360} 
+                min={-360}
+                max={360}
                 type='number'
                 sufix='º'
                 withSlider
-                label='Light colors hue angle'
+                label={t('lightHueAngle')}
               />
             </InputsRowItem>
             <InputsRowItem>
@@ -423,12 +429,12 @@ const ScaleApp = () => {
                 value={lightSaturation}
                 onChange={(e) => setLightSaturation(e.target.value)}
                 onBlur={(e) => !e.target.value && setLightSaturation(0)}
-                min={-100} 
-                max={100} 
+                min={-100}
+                max={100}
                 type='number'
                 sufix='%'
                 withSlider
-                label='Light colors saturation'
+                label={t('lightSaturation')}
               />
             </InputsRowItem>
           </InputsRow>
@@ -438,15 +444,15 @@ const ScaleApp = () => {
       <Footer />
     </MainWrapper>
   )
-  
+
 }
 
 const App = () => (
-  <Router basename={process.env.PUBLIC_URL}>
-    <div>
-      <Route exact path="/" component={ScaleApp} />
-      <Route exact path="/gallery" component={GalleryApp} />
-    </div>
+  <Router basename={import.meta.env.BASE_URL}>
+    <Routes>
+      <Route path="/" element={<ScaleApp />} />
+      <Route path="/gallery" element={<GalleryApp />} />
+    </Routes>
   </Router>
 )
 

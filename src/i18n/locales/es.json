@@ -1,0 +1,23 @@
+{
+  "darkColorsAmount": "Cantidad de colores oscuros",
+  "darkness": "Oscuridad",
+  "darkHueAngle": "Ángulo de tono de colores oscuros",
+  "darkSaturation": "Saturación de colores oscuros",
+  "lightColorsAmount": "Cantidad de colores claros",
+  "lightness": "Claridad",
+  "lightHueAngle": "Ángulo de tono de colores claros",
+  "lightSaturation": "Saturación de colores claros",
+  "color": "Color",
+  "background": "Fondo",
+  "triggers": "Acciones",
+  "copySvg": "Copiar SVG",
+  "copyColors": "Copiar colores",
+  "randomizeAll": "Aleatorizar todo",
+  "randomizeColor": "Aleatorizar color",
+  "madeBy": "hecho por",
+  "gallery": "Galería",
+  "submit": "+enviar",
+  "by": "por",
+  "pageTitle": "Scale — generador de escalas de color",
+  "pageDescription": "Generador de escalas de color por Hayk An"
+}
