@@ -2,10 +2,6 @@
 
 A generative way to create color scales.
 
-**Live:** [hihayk.github.io/scale](https://hihayk.github.io/scale)
-
-![Demo](https://github.com/hihayk/scale/blob/master/docs/shot.gif?raw=true)
-
 ## About
 
 Originally created by [Hayk An](http://hihayk.com) — a tool to generate and customize color palettes with dark and light variations, saturation, hue rotation, and more.
